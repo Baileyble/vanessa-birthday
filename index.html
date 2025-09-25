@@ -550,7 +550,7 @@
         }
 
         .birthday-card::before {
-            content: '🎂✨🌸💕';
+            content: '🎂🌸💕';
             position: absolute;
             top: 20px;
             left: 50%;
@@ -630,27 +630,26 @@
     </style>
     
     <script>
-        // Simple password check without complex animations
         function checkPassword() {
-            var passwordInput = document.getElementById('passwordInput');
-            var errorMsg = document.getElementById('errorMsg');
-            var passwordOverlay = document.querySelector('.password-overlay');
-            var mainContent = document.querySelector('.main-content');
+            const passwordInput = document.getElementById('passwordInput');
+            const errorMsg = document.getElementById('errorMsg');
+            const passwordOverlay = document.querySelector('.password-overlay');
+            const mainContent = document.querySelector('.main-content');
             
             if (!passwordInput || !passwordOverlay || !mainContent) {
                 return;
             }
             
-            var password = passwordInput.value;
+            const password = passwordInput.value.trim();
             
             if (password === '1004') {
                 passwordOverlay.style.display = 'none';
                 mainContent.style.display = 'block';
                 
-                // Simple celebration without complex animations
-                setTimeout(function() {
-                    addSimpleSparkles();
-                }, 500);
+                // Trigger birthday surprise animations
+                setTimeout(createFloatingHearts, 500);
+                setTimeout(showBirthdayConfetti, 1000);
+                setTimeout(addSparkles, 1500);
             } else {
                 if (errorMsg) {
                     errorMsg.style.display = 'block';
@@ -660,22 +659,112 @@
             }
         }
 
-        // Simple sparkle effect
-        function addSimpleSparkles() {
-            var title = document.querySelector('.title');
-            if (title) {
-                title.classList.add('sparkle-element');
+        // Floating hearts animation
+        function createFloatingHearts() {
+            const heartsContainer = document.createElement('div');
+            heartsContainer.className = 'floating-hearts';
+            
+            for (let i = 0; i < 6; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.innerHTML = ['💕', '💖', '💗', '💝', '💘', '🌸'][i];
+                heartsContainer.appendChild(heart);
+            }
+            
+            document.body.appendChild(heartsContainer);
+        }
+
+        // Birthday confetti
+        function showBirthdayConfetti() {
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    confetti.style.opacity = Math.random();
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        if (confetti && confetti.parentNode) {
+                            confetti.remove();
+                        }
+                    }, 5000);
+                }, i * 100);
             }
         }
 
-        // Initialize when page loads
-        window.addEventListener('load', function() {
-            var passwordInput = document.getElementById('passwordInput');
-            var passwordButton = document.querySelector('.password-button');
+        // Add sparkles to special elements
+        function addSparkles() {
+            const title = document.querySelector('.title');
+            const experienceTitles = document.querySelectorAll('.experience-title');
+            
+            if (title) title.classList.add('sparkle-element');
+            experienceTitles.forEach(title => {
+                if (title) title.classList.add('sparkle-element');
+            });
+        }
+
+        // Cursor trail effect
+        document.addEventListener('mousemove', function(e) {
+            if (Math.random() > 0.9) {
+                const trail = document.createElement('div');
+                trail.className = 'cursor-trail';
+                trail.style.left = e.clientX + 'px';
+                trail.style.top = e.clientY + 'px';
+                document.body.appendChild(trail);
+                
+                setTimeout(() => {
+                    if (trail && trail.parentNode) {
+                        trail.remove();
+                    }
+                }, 1000);
+            }
+        });
+
+        // Birthday surprise messages
+        function showBirthdayMessage() {
+            const messages = [
+                "Happy Birthday Beautiful! 🌸",
+                "You're amazing! 💕",
+                "Best day ever! ✨",
+                "Bailey loves you! 💖",
+                "Birthday Queen! 👑"
+            ];
+            
+            const message = messages[Math.floor(Math.random() * messages.length)];
+            const messageEl = document.createElement('div');
+            messageEl.innerHTML = message;
+            messageEl.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #f9a8d4, #f472b6);
+                color: white;
+                padding: 15px 20px;
+                border-radius: 25px;
+                font-weight: 600;
+                z-index: 1000;
+                animation: float 3s ease-in-out;
+                box-shadow: 0 8px 25px rgba(244, 114, 182, 0.3);
+            `;
+            
+            document.body.appendChild(messageEl);
+            setTimeout(() => {
+                if (messageEl && messageEl.parentNode) {
+                    messageEl.remove();
+                }
+            }, 4000);
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById('passwordInput');
+            const passwordButton = document.querySelector('.password-button');
             
             if (passwordInput) {
                 passwordInput.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter' || e.keyCode === 13) {
+                    if (e.key === 'Enter') {
                         checkPassword();
                     }
                 });
@@ -684,6 +773,14 @@
             if (passwordButton) {
                 passwordButton.addEventListener('click', checkPassword);
             }
+            
+            // Random birthday messages after password entered
+            setInterval(() => {
+                const mainContent = document.querySelector('.main-content');
+                if (mainContent && mainContent.style.display === 'block' && Math.random() > 0.8) {
+                    showBirthdayMessage();
+                }
+            }, 20000);
         });
     </script>
 </head>
@@ -985,4 +1082,3 @@
     </div>
 </body>
 </html>
-            
