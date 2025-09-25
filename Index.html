@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Experience - October 4th</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Playfair+Display:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+
+
+        /* Password Protection Styles */
+        .password-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 30%, #fbcfe8 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .password-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(249, 168, 212, 0.3);
+            border-radius: 25px;
+            padding: 50px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(219, 39, 119, 0.1);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .password-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: #be185d;
+            margin-bottom: 20px;
+        }
+
+        .password-subtitle {
+            color: #9ca3af;
+            font-size: 1rem;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid rgba(249, 168, 212, 0.5);
+            border-radius: 15px;
+            font-size: 1.1rem;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.8);
+            margin-bottom: 20px;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .password-input:focus {
+            outline: none;
+            border-color: #f472b6;
+        }
+
+        .password-button {
+            background: linear-gradient(135deg, #f9a8d4 0%, #f472b6 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 15px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .password-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(244, 114, 182, 0.3);
+        }
+
+        .password-error {
+            color: #be185d;
+            font-size: 0.9rem;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .main-content {
+            display: none;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 30%, #fbcfe8 100%);
+            color: #374151;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(251, 207, 232, 0.3);
+            box-shadow: 0 20px 40px rgba(219, 39, 119, 0.05);
+            min-height: 100vh;
+        }
+
+        .header {
+            padding: 80px 60px 60px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(254, 242, 248, 0.8) 100%);
+            border-bottom: 2px solid #f9a8d4;
+            position: relative;
+        }
+
+        .header::before {
+            content: '✨';
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            animation: twinkle 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.5; transform: translateX(-50%) scale(0.8); }
+            100% { opacity: 1; transform: translateX(-50%) scale(1.2); }
+        }
+
+        .date-cute {
+            display: inline-block;
+            background: linear-gradient(135deg, #f9a8d4 0%, #f472b6 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(244, 114, 182, 0.3);
+        }
+
+        .title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 400;
+            color: #be185d;
+            margin-bottom: 15px;
+            line-height: 1.1;
+        }
+
+        .title-heart {
+            color: #f472b6;
+            font-size: 0.8em;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #9ca3af;
+            font-weight: 300;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .cute-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            font-size: 1.2rem;
+        }
+
+        .cute-divider::before,
+        .cute-divider::after {
+            content: '';
+            width: 50px;
+            height: 1px;
+            background: #f9a8d4;
+        }
+
+        .content {
+            padding: 0 60px 80px;
+        }
+
+        .experience {
+            margin: 60px 0;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 25px;
+            padding: 40px;
+            border: 1px solid rgba(251, 207, 232, 0.4);
+            box-shadow: 0 10px 30px rgba(219, 39, 119, 0.05);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .experience:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(219, 39, 119, 0.1);
+        }
+
+        .experience-number {
+            position: absolute;
+            top: -15px;
+            left: 40px;
+            background: linear-gradient(135deg, #f472b6 0%, #ec4899 100%);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
+        }
+
+        .experience-header {
+            margin-bottom: 25px;
+        }
+
+        .time-cute {
+            color: #f472b6;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .time-cute::before {
+            content: '⏰';
+            font-size: 1rem;
+        }
+
+        .experience-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: #be185d;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .experience-location {
+            color: #9ca3af;
+            font-size: 0.95rem;
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .experience-location::before {
+            content: '📍';
+            font-size: 0.9rem;
+        }
+
+        .experience-description {
+            color: #6b7280;
+            font-size: 1rem;
+            line-height: 1.7;
+            margin: 25px 0;
+        }
+
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .info-card {
+            background: rgba(251, 207, 232, 0.2);
+            border: 1px solid rgba(251, 207, 232, 0.5);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover {
+            background: rgba(251, 207, 232, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .info-emoji {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .info-label {
+            color: #9ca3af;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .info-value {
+            color: #374151;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .options-cute {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(254, 242, 248, 0.7) 100%);
+            border: 2px solid rgba(249, 168, 212, 0.3);
+            border-radius: 20px;
+            padding: 35px;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .options-cute::before {
+            content: '💖';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 1.2rem;
+        }
+
+        .options-title {
+            font-family: 'Playfair Display', serif;
+            color: #be185d;
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+
+        .option-card {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(251, 207, 232, 0.4);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .option-card:hover {
+            background: rgba(254, 242, 248, 0.8);
+            border-color: #f9a8d4;
+            transform: scale(1.02);
+        }
+
+        .option-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .option-name {
+            color: #be185d;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .option-emoji {
+            font-size: 1.1rem;
+        }
+
+        .option-description {
+            color: #6b7280;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .action-cute {
+            background: linear-gradient(135deg, #f9a8d4 0%, #f472b6 100%);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            margin: 30px 0;
+            box-shadow: 0 8px 25px rgba(244, 114, 182, 0.2);
+        }
+
+        .action-title {
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .action-button {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.9);
+            color: #be185d;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            margin: 5px;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .action-button:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
+        }
+
+        .birthday-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(254, 242, 248, 0.8) 100%);
+            border: 2px solid #f9a8d4;
+            border-radius: 25px;
+            padding: 50px;
+            text-align: center;
+            margin: 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .birthday-card::before {
+            content: '🎂✨🌸💕';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5rem;
+            letter-spacing: 15px;
+        }
+
+        .birthday-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: #be185d;
+            margin-bottom: 20px;
+            margin-top: 20px;
+            font-weight: 500;
+        }
+
+        .birthday-text {
+            color: #6b7280;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .footer {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 40px 60px;
+            text-align: center;
+            border-top: 1px solid rgba(251, 207, 232, 0.4);
+        }
+
+        .footer-text {
+            color: #9ca3af;
+            font-size: 0.9rem;
+            font-weight: 300;
+        }
+
+        .footer-heart {
+            color: #f472b6;
+            font-size: 1.1rem;
+            margin: 0 5px;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .header, .content, .footer {
+                padding-left: 30px;
+                padding-right: 30px;
+            }
+
+            .title {
+                font-size: 3rem;
+            }
+
+            .experience {
+                padding: 30px 25px;
+            }
+
+            .experience-title {
+                font-size: 1.8rem;
+            }
+
+            .info-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .birthday-card {
+                padding: 35px 25px;
+            }
+
+            .birthday-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+    
+    <script>
+        function checkPassword() {
+            const password = document.getElementById('passwordInput').value;
+            const errorMsg = document.getElementById('errorMsg');
+            
+            if (password === '1004') {
+                document.querySelector('.password-overlay').style.display = 'none';
+                document.querySelector('.main-content').style.display = 'block';
+            } else {
+                errorMsg.style.display = 'block';
+                errorMsg.textContent = 'Try your special day! 🌸';
+                document.getElementById('passwordInput').value = '';
+            }
+        }
+
+        // Allow Enter key to submit
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    checkPassword();
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <!-- Password Protection Screen -->
+    <div class="password-overlay">
+        <div class="password-card">
+            <div class="password-title">🌸 Birthday Access 🌸</div>
+            <div class="password-subtitle">Enter your special date to continue</div>
+            <input type="password" id="passwordInput" class="password-input" placeholder="MMDD">
+            <button onclick="checkPassword()" class="password-button">Enter ✨</button>
+            <div id="errorMsg" class="password-error"></div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
+        <div class="header">
+            <div class="date-cute">October 4th, 2025</div>
+            <h1 class="title">Vanessa's Birthday</h1>
+            <p class="subtitle">your most perfect day ever</p>
+            <div class="cute-divider">🌸</div>
+            
+            <div class="birthday-card">
+                <div class="birthday-title">A Love Letter</div>
+                <p class="birthday-text">
+                    Happy early birthday my love, I can't wait to treat you to a special day in New York for my amazing girl. 
+                    I know how important it is for you to be prepared so I have made you this itinerary for your birthday so you can know what to expect. 
+                    There are some intake forms below that you will need to fill out ahead of time. I hope you enjoy what I have planned for you and are as excited as I am for your birthday in New York.
+                </p>
+                <br>
+                <p class="birthday-text" style="font-style: italic; color: #be185d;">
+                    - Your love, and future husband<br>
+                    Bailey ❤️
+                </p>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- Morning Facial -->
+            <div class="experience">
+                <div class="experience-number">1</div>
+                <div class="experience-header">
+                    <div class="time-cute">10:00 AM</div>
+                    <h2 class="experience-title">Glow Up Session</h2>
+                    <p class="experience-location">Heyday Jersey City</p>
+                </div>
+                <p class="experience-description">
+                    Start your special day with the most relaxing facial that'll have you absolutely glowing! 
+                    50 minutes of pure self-care and pampering to get you birthday-ready.
+                </p>
+                <div class="info-cards">
+                    <div class="info-card">
+                        <div class="info-emoji">⏱️</div>
+                        <div class="info-label">Duration</div>
+                        <div class="info-value">50 minutes</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-emoji">✨</div>
+                        <div class="info-label">Treatment</div>
+                        <div class="info-value">The Essential</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-emoji">💆‍♀️</div>
+                        <div class="info-label">Vibe</div>
+                        <div class="info-value">Relaxing</div>
+                    </div>
+                </div>
+                <div class="action-cute">
+                    <div class="action-title">Pre-Appointment Prep</div>
+                    <a href="https://blvd.app/@heyday/appointments/d0ce9827-0d93-4a96-bec9-0aa3b8bd8d7a?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9%2EeyJhdWQiOiJjbGllbnRfcG9ydGFsIiwiYklkIjoiOTg0ZDhlYzEtMjM3Ni00ODhjLTlmZDQtMGExZGI3NjVlNDNmIiwiY0lkIjoiOGI3NjI4ZDEtZjE1NC00NTQ0LTkyNjUtNzVhZGZmZmJmZjhmIiwiZXhwIjoxNzkwMTg2ODU2LCJpYXQiOjE3NTg3MzcyNTYsIm5iZiI6MTc1ODczNzI1NSwic2NvcGUiOiJQbGF0Zm9ybUNsaWVudDphcHBvaW50bWVudC9kMGNlOTgyNy0wZDkzLTRhOTYtYmVjOS0wYWEzYjhiZDhkN2E6cmVhZCBQbGF0Zm9ybUNsaWVudDphcHBvaW50bWVudC9kMGNlOTgyNy0wZDkzLTRhOTYtYmVjOS0wYWEzYjhiZDhkN2E6dXBkYXRlIFBsYXRmb3JtQ2xpZW50OmN1c3RvbV9mb3Jtcy84Yjc2MjhkMS1mMTU0LTQ1NDQtOTI2NS03NWFkZmZmYmZmOGY6cmVhZCBQbGF0Zm9ybUNsaWVudDpjdXN0b21fZm9ybXMvOGI3NjI4ZDEtZjE1NC00NTQ0LTkyNjUtNzVhZGZmZmJmZjhmOnVwZGF0ZSBQbGF0Zm9ybUNsaWVudDpjbGllbnRfcGFzc3dvcmRsZXNzX2F1dGgvOTg0ZDhlYzEtMjM3Ni00ODhjLTlmZDQtMGExZGI3NjVlNDNmOnJlYWQgUGxhdGZvcm1DbGllbnQ6Y2xpZW50LzhiNzYyOGQxLWYxNTQtNDU0NC05MjY1LTc1YWRmZmZiZmY4ZjpyZWFkIFBsYXRmb3JtQ2xpZW50OmNsaWVudF9pbmZvLzhiNzYyOGQxLWYxNTQtNDU0NC05MjY1LTc1YWRmZmZiZmY4Zjp1cGRhdGUgUGxhdGZvcm1DbGllbnQ6Y2xpZW50X25vdGUvOGI3NjI4ZDEtZjE1NC00NTQ0LTkyNjUtNzVhZGZmZmJmZjhmOmNyZWF0ZSBQbGF0Zm9ybUNsaWVudDpidXNpbmVzcy85ODRkOGVjMS0yMzc2LTQ4OGMtOWZkNC0wYTFkYjc2NWU0M2Y6cmVhZCIsInN1YiI6ImFwcG9pbnRtZW50OmQwY2U5ODI3LTBkOTMtNGE5Ni1iZWM5LTBhYTNiOGJkOGQ3YSJ9%2EaWEMwUkmk1ZOjp3TEdSYJViNJQLGcoS0jzI039JqWC4&complete-forms" class="action-button" target="_blank">📝 Fill Out Form</a>
+                </div>
+            </div>
+
+            <!-- Getting Ready -->
+            <div class="experience">
+                <div class="experience-number">2</div>
+                <div class="experience-header">
+                    <div class="time-cute">11:00 AM - 1:00 PM</div>
+                    <h2 class="experience-title">Get Ready Time</h2>
+                    <p class="experience-location">Back to Hotel</p>
+                </div>
+                <p class="experience-description">
+                    Head back to your hotel for the most relaxing getting ready session! Take your time picking out the perfect 
+                    birthday outfit, do your makeup, and just enjoy the anticipation of your special day ahead.
+                </p>
+                <div class="info-cards">
+                    <div class="info-card">
+                        <div class="info-emoji">⏰</div>
+                        <div class="info-label">Duration</div>
+                        <div class="info-value">2 hours</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-emoji">👗</div>
+                        <div class="info-label">Activity</div>
+                        <div class="info-value">Get Dressed</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-emoji">💅</div>
+                        <div class="info-label">Vibe</div>
+                        <div class="info-value">Prep Mode</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lunch Selection -->
+            <div class="experience">
+                <div class="experience-number">3</div>
+                <div class="experience-header">
+                    <div class="time-cute">1:00 PM</div>
+                    <h2 class="experience-title">Lunch Date</h2>
+                    <p class="experience-location">Downtown Manhattan</p>
+                </div>
+                <p class="experience-description">
+                    Time for some yummy food! Pick whichever option sounds most delicious to you right now. 
+                    All three are absolutely perfect for a birthday lunch.
+                </p>
+                <div class="options-cute">
+                    <div class="options-title">Pick Your Favorite</div>
+                    
+                    <div class="option-card">
+                        <div class="option-name">
+                            <span class="option-emoji">🌮</span>
+                            Los Tacos No. 1
+                        </div>
+                        <div class="option-description">
+                            The most amazing authentic tacos that'll make your taste buds so happy! 
+                            Fresh, flavorful, and perfect for a birthday treat.
+                        </div>
+                    </div>
+                    
+                    <div class="option-card">
+                        <div class="option-name">
+                            <span class="option-emoji">🍕</span>
+                            Lucia Pizza
+                        </div>
+                        <div class="option-description">
+                            Classic NYC pizza that's absolutely divine! Quick, delicious, and oh-so-good. 
+                            The perfect slice of New York happiness.
+                        </div>
+                    </div>
+                    
+                    <div class="option-card">
+                        <div class="option-name">
+                            <span class="option-emoji">🍗</span>
+                            375° Chicken & Fries
+                        </div>
+                        <div class="option-description">
+                            The coziest comfort food with the most tender chicken tenders ever! 
+                            Choose your spice level and enjoy every bite.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Head Spa -->
+            <div class="experience">
+                <div class="experience-number">4</div>
+                <div class="experience-header">
+                    <div class="time-cute">2:30 PM</div>
+                    <h2 class="experience-title">Head Spa Bliss</h2>
+                    <p class="experience-location">Hayato New York</p>
+                </div>
+                <p class="experience-description">
+                    Get ready for the most relaxing almost-2-hours of your life! Japanese head spa magic that'll leave you 
+                    feeling like a goddess. Plus they'll give you the prettiest blow dry at the end!
+                </p>
+                <div class="info-cards">
+                    <div class="info-card">
+                        <div class="info-emoji">⏰</div>
+                        <div class="info-label">Duration</div>
+                        <div class="info-value">110 minutes</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-emoji">🇯🇵</div>
+                        <div class="info-label">Style</div>
+                        <div class="info-value">Japanese</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-emoji">💁‍♀️</div>
+                        <div class="info-label">Includes</div>
+                        <div class="info-value">Blow Dry</div>
+                    </div>
+                </div>
+                <div class="action-cute">
+                    <div class="action-title">Consultation Prep</div>
+                    <a href="https://www.fresha.com/cf/n-qPqRl3" class="action-button" target="_blank">📋 Complete Form</a>
+                </div>
+            </div>
+
+            <!-- Lip Lab -->
+            <div class="experience">
+                <div class="experience-number">5</div>
+                <div class="experience-header">
+                    <div class="time-cute">5:00 PM</div>
+                    <h2 class="experience-title">Custom Lipstick</h2>
+                    <p class="experience-location">Lip Lab SoHo</p>
+                </div>
+                <p class="experience-description">
+                    Create your very own signature lipstick shade! Work with a color expert to make the most perfect color 
+                    that's uniquely YOU. You even get to name it whatever you want!
+                </p>
+                <div class="info-cards">
+                    <div class="info-card">
+                        <div class="info-emoji">⏳</div>
+                        <div class="info-label">Duration</div>
+                        <div class="info-value">60 minutes</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-emoji">💄</div>
+                        <div class="info-label">Creates</div>
+                        <div class="info-value">Custom Shade</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-emoji">📍</div>
+                        <div class="info-label">Address</div>
+                        <div class="info-value">133 Wooster St</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dinner -->
+            <div class="experience">
+                <div class="experience-number">6</div>
+                <div class="experience-header">
+                    <div class="time-cute">7:00 PM</div>
+                    <h2 class="experience-title">Birthday Dinner</h2>
+                    <p class="experience-location">Milano Prime</p>
+                </div>
+                <p class="experience-description">
+                    End your perfect day with the most beautiful dinner! Elegant Italian cuisine in the loveliest atmosphere. 
+                    The perfect way to celebrate your special day with amazing food and wonderful vibes.
+                </p>
+                <div class="info-cards">
+                    <div class="info-card">
+                        <div class="info-emoji">🍝</div>
+                        <div class="info-label">Cuisine</div>
+                        <div class="info-value">Italian Fine</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-emoji">✨</div>
+                        <div class="info-label">Atmosphere</div>
+                        <div class="info-value">Elegant</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-emoji">🎂</div>
+                        <div class="info-label">Occasion</div>
+                        <div class="info-value">Birthday!</div>
+                    </div>
+                </div>
+                <div class="action-cute">
+                    <div class="action-title">Dinner Menu</div>
+                    <a href="https://www.imny.com/location/prime-soho/#prime-main-menu" class="action-button" target="_blank">🍽️ See What's Yummy</a>
+                </div>
+            </div>
+
+            <!-- Dessert & Bar -->
+            <div class="experience">
+                <div class="experience-number">7</div>
+                <div class="experience-header">
+                    <div class="time-cute">9:00 PM</div>
+                    <h2 class="experience-title">Dessert & Bar Time</h2>
+                    <p class="experience-location">End the Night</p>
+                </div>
+                <p class="experience-description">
+                    Cap off your perfect birthday with sweet treats and cocktails! Whether you want to find a cozy dessert spot, 
+                    hit up a fun bar for birthday drinks, or just see where the night takes you - the perfect ending to your special day.
+                </p>
+                <div class="info-cards">
+                    <div class="info-card">
+                        <div class="info-emoji">🍰</div>
+                        <div class="info-label">Options</div>
+                        <div class="info-value">Dessert & Drinks</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-emoji">🍸</div>
+                        <div class="info-label">Vibe</div>
+                        <div class="info-value">Celebration</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-emoji">✨</div>
+                        <div class="info-label">Energy</div>
+                        <div class="info-value">Perfect Ending</div>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="footer">
+            <p class="footer-text">
+                Made with so much <span class="footer-heart">♡</span> for your special day
+            </p>
+        </div>
+            </div>
+    </div>
+</body>
+</html>
