@@ -28,6 +28,120 @@
             font-family: 'DM Sans', sans-serif;
         }
 
+        /* Fun Animations & Effects */
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-10px) rotate(2deg); }
+            66% { transform: translateY(-5px) rotate(-1deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.1); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.1); }
+            70% { transform: scale(1); }
+        }
+
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 1.5rem;
+            color: #f472b6;
+            animation: float 6s ease-in-out infinite;
+            opacity: 0.7;
+        }
+
+        .floating-heart:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .floating-heart:nth-child(2) { left: 20%; animation-delay: 2s; }
+        .floating-heart:nth-child(3) { left: 30%; animation-delay: 4s; }
+        .floating-heart:nth-child(4) { left: 70%; animation-delay: 1s; }
+        .floating-heart:nth-child(5) { left: 80%; animation-delay: 3s; }
+        .floating-heart:nth-child(6) { left: 90%; animation-delay: 5s; }
+
+        .sparkle-element {
+            position: relative;
+            display: inline-block;
+        }
+
+        .sparkle-element::before {
+            content: '✨';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            animation: sparkle 2s ease-in-out infinite;
+            font-size: 0.8em;
+        }
+
+        .birthday-card .birthday-title {
+            animation: heartbeat 2s ease-in-out infinite;
+        }
+
+        .experience-number {
+            animation: sparkle 3s ease-in-out infinite;
+        }
+
+        /* Hover effects for extra fun */
+        .experience:hover .experience-number {
+            animation: heartbeat 0.6s ease-in-out;
+        }
+
+        .action-button:hover {
+            animation: heartbeat 0.4s ease-in-out;
+        }
+
+        /* Confetti effect */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #f472b6;
+            animation: confetti-fall 3s linear infinite;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        .confetti:nth-child(odd) { background: #fbbf24; }
+        .confetti:nth-child(3n) { background: #ec4899; }
+        .confetti:nth-child(4n) { background: #f9a8d4; }
+
+        /* Special birthday message animation */
+        .birthday-message-float {
+            animation: float 8s ease-in-out infinite;
+        }
+
+        /* Cute cursor trail effect */
+        .cursor-trail {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: #f472b6;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 999;
+            animation: sparkle 1s ease-out forwards;
+        }
+
         .password-card {
             background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(20px);
@@ -141,6 +255,439 @@
             100% { opacity: 1; transform: translateX(-50%) scale(1.2); }
         }
 
+        .date-cute {
+            display: inline-block;
+            background: linear-gradient(135deg, #f9a8d4 0%, #f472b6 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(244, 114, 182, 0.3);
+        }
+
+        .title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 400;
+            color: #be185d;
+            margin-bottom: 15px;
+            line-height: 1.1;
+        }
+
+        .title-heart {
+            color: #f472b6;
+            font-size: 0.8em;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #9ca3af;
+            font-weight: 300;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .cute-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            font-size: 1.2rem;
+        }
+
+        .cute-divider::before,
+        .cute-divider::after {
+            content: '';
+            width: 50px;
+            height: 1px;
+            background: #f9a8d4;
+        }
+
+        .content {
+            padding: 0 60px 80px;
+        }
+
+        .experience {
+            margin: 60px 0;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 25px;
+            padding: 40px;
+            border: 1px solid rgba(251, 207, 232, 0.4);
+            box-shadow: 0 10px 30px rgba(219, 39, 119, 0.05);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .experience:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(219, 39, 119, 0.1);
+        }
+
+        .experience-number {
+            position: absolute;
+            top: -15px;
+            left: 40px;
+            background: linear-gradient(135deg, #f472b6 0%, #ec4899 100%);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
+        }
+
+        .experience-header {
+            margin-bottom: 25px;
+        }
+
+        .time-cute {
+            color: #f472b6;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .time-cute::before {
+            content: '⏰';
+            font-size: 1rem;
+        }
+
+        .experience-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: #be185d;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .experience-location {
+            color: #9ca3af;
+            font-size: 0.95rem;
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .experience-location::before {
+            content: '📍';
+            font-size: 0.9rem;
+        }
+
+        .experience-description {
+            color: #6b7280;
+            font-size: 1rem;
+            line-height: 1.7;
+            margin: 25px 0;
+        }
+
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .info-card {
+            background: rgba(251, 207, 232, 0.2);
+            border: 1px solid rgba(251, 207, 232, 0.5);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover {
+            background: rgba(251, 207, 232, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .info-emoji {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .info-label {
+            color: #9ca3af;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .info-value {
+            color: #374151;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .options-cute {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(254, 242, 248, 0.7) 100%);
+            border: 2px solid rgba(249, 168, 212, 0.3);
+            border-radius: 20px;
+            padding: 35px;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .options-cute::before {
+            content: '💖';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 1.2rem;
+        }
+
+        .options-title {
+            font-family: 'Playfair Display', serif;
+            color: #be185d;
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+
+        .option-card {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(251, 207, 232, 0.4);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .option-card:hover {
+            background: rgba(254, 242, 248, 0.8);
+            border-color: #f9a8d4;
+            transform: scale(1.02);
+        }
+
+        .option-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .option-name {
+            color: #be185d;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .option-emoji {
+            font-size: 1.1rem;
+        }
+
+        .option-description {
+            color: #6b7280;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .action-cute {
+            background: linear-gradient(135deg, #f9a8d4 0%, #f472b6 100%);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            margin: 30px 0;
+            box-shadow: 0 8px 25px rgba(244, 114, 182, 0.2);
+        }
+
+        .action-title {
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .action-button {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.9);
+            color: #be185d;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            margin: 5px;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .action-button:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
+        }
+
+        .birthday-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(254, 242, 248, 0.8) 100%);
+            border: 2px solid #f9a8d4;
+            border-radius: 25px;
+            padding: 50px;
+            text-align: center;
+            margin: 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .birthday-card::before {
+            content: '🎂🌸💕';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5rem;
+            letter-spacing: 15px;
+        }
+
+        .birthday-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: #be185d;
+            margin-bottom: 20px;
+            margin-top: 20px;
+            font-weight: 500;
+        }
+
+        .birthday-text {
+            color: #6b7280;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .footer {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 40px 60px;
+            text-align: center;
+            border-top: 1px solid rgba(251, 207, 232, 0.4);
+        }
+
+        .footer-text {
+            color: #9ca3af;
+            font-size: 0.9rem;
+            font-weight: 300;
+        }
+
+        .footer-heart {
+            color: #f472b6;
+            font-size: 1.1rem;
+            margin: 0 5px;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .header, .content, .footer {
+                padding-left: 30px;
+                padding-right: 30px;
+            }
+
+            .title {
+                font-size: 3rem;
+            }
+
+            .experience {
+                padding: 30px 25px;
+            }
+
+            .experience-title {
+                font-size: 1.8rem;
+            }
+
+            .info-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .birthday-card {
+                padding: 35px 25px;
+            }
+
+            .birthday-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+    
+    <script>
+        function checkPassword() {
+            const password = document.getElementById('passwordInput').value;
+            const errorMsg = document.getElementById('errorMsg');
+            
+            if (password === '1004') {
+                document.querySelector('.password-overlay').style.display = 'none';
+                document.querySelector('.main-content').style.display = 'block';
+                
+                // Trigger birthday surprise animations
+                setTimeout(createFloatingHearts, 500);
+                setTimeout(showBirthdayConfetti, 1000);
+                setTimeout(addSparkles, 1500);
+            } else {
+                errorMsg.style.display = 'block';
+                errorMsg.textContent = 'Try your special day! 🌸';
+                document.getElementById('passwordInput').value = '';
+            }
+        }
+
+        // Floating hearts animation
+        function createFloatingHearts() {
+            const heartsContainer = document.createElement('div');
+            heartsContainer.className = 'floating-hearts';
+            
+            for (let i = 0; i < 6; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.innerHTML = ['💕', '💖', '💗', '💝', '💘', '🌸'][i];
+                heartsContainer.appendChild(heart);
+            }
+            
+            document.body.appendChild(heartsContainer);
+        }
+
+        // Birthday confetti
+        function showBirthdayConfetti() {
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    confetti.style.opacity = Math.random();
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 5000);
+                }, i * 100);
+            }
+        }
+
+        // Add sparkles to special elements
+        function addSparkles() {
+            const title = document.querySelector('.title');
+            const experienceTitles = document.querySelectorAll('.experience-title');
+            
+            if (title) title.classList.add('sparkle-ele
         .date-cute {
             display: inline-block;
             background: linear-gradient(135deg, #f9a8d4 0%, #f472b6 100%);
